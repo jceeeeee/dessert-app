@@ -1,0 +1,150 @@
+<%- include('../partials/header') %>
+
+<!------ Include the above in your HEAD tag ---------->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<div class="show-page-div"  style="background-size: cover; background-color: black">
+    <section id="show-dessert-title" style="position:relative; left:80px";>
+        <br>
+        <h1 style="text-align:center"><%= thisDessert.name %> @ <%= thisDessert.location %></h1>
+        <button><a href="/desserts/<%= thisDessert._id %>/edit">Update Entry</a></button>
+        <br>
+        <br>
+       <div class="row" id="show-dessert-info">
+            <div class="bg-dark py-5">
+                <div class="form-group">
+                    Description: <%= thisDessert.description %>
+                </div>
+                <div class="form-group">
+                    Flavour: <%= thisDessert.flavours %>
+                </div>
+                <div class="form-group">
+                    Calories: <%= thisDessert.calories %>
+                </div>
+                <div class="form-group"> 
+                    Price Range: <%= thisDessert.priceRange %>
+                </div>
+                <div class="form-group">
+                    <%# Appending the ingredient to the page %>
+                        <div>Ingredients:</div>
+                            <ul>
+                                <%- thisDessert.ingredientList.map(d => 
+                                    `<span class="badge badge-pill badge-light"> ${d.ingredientName} </span>`
+                                ).join('') %>
+                            </ul>
+                    <%# Appending the ingredient to the dessert from drop down %>
+                        <form id="add-to-dessert" action="/desserts/<%= thisDessert._id%>/ingredients/" method="POST">
+                        <select name="ingredientId" class="form-control">
+                            <%- ingredients.map(i => `<option value="${i._id}">${i.ingredientName}</option>`).join('') %>
+                        </select>
+                        <br>
+                        <input type="submit" value="Add" style="color: black"/>
+                        </form>
+                    </div>       
+            </div>
+            <div class="col-6" style="position:relative; left:80px"; >
+                <img class="image" src="<%= thisDessert.photo %>" alt="..."  width="800" height="500"/>
+            </div>
+        </div>
+    </section>
+</div>
+
+<%# The comment form %>
+
+<div class="container px-4 px-lg-5 my-5"  style="background-color: grey">
+    <form id="review-form" method="POST" action="/desserts/<%= thisDessert._id %>/bloggers">
+        <br>
+        <h3>Leave a Comment</h3>
+       <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="title" class="form-control" placeholder="Title *" value="" required />
+                </div>
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Nickname *" value="" required />
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select name="rating" class="form-control" required>
+                        <option value="1">1</option>
+                        <option value="1">1.5</option>
+                        <option value="2">2</option>
+                        <option value="1">2.5</option>
+                        <option value="3">3</option>
+                        <option value="1">3.5</option>
+                        <option value="4">4</option>
+                        <option value="1">4.5</option>
+                        <option value="5">5</option>
+                      </select>
+                </div>
+                <div class="form-group">
+                    <label>Would you recommend this to a friend?</label>
+                    <input type="radio" value="Yes" name="decision" checked > Yup
+                    <input type="radio" value= "No" name="decision"> Nope
+                </div>
+            
+                <div class="form-group">
+                    <input type="submit" value="Submit Comment" style="color: black"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <textarea name="comment" class="form-control" placeholder="What did you like about the dessert? Tell us about your experience *" style="width: 100%; height: 232px;"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+<%# Viewing all comments and reviews %>
+
+<div class="container px-4 px-lg-5 my-5"  style="background-color: grey">
+        <br>
+        <h3>All Comments</h3>
+       <div class="row">
+            <div>
+                <% if (thisDessert.blogger.length) { %>
+                        <% let total = 0 %>
+                        <% thisDessert.blogger.forEach(function(b) { %>
+                            <% total += b.rating %>
+                        <div class="bg-dark py-5" >
+                            <div class= "outer-comment-section" style = "position:relative; left:80px";>
+                                <h5> <form id="remove-review" method="POST"
+                                action="/desserts/<%= thisDessert._id %>/bloggers/<%= b._id %>?_method=DELETE">
+                                <input type='submit' value="X" style="color: black";>
+                                <%= b.createdAt.toLocaleDateString() %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <%= b.title %> @ <%= b.name %></h5>
+                            </div>
+                            <hr>
+                            <div class="inner-comment-section" style = "position:relative; left:80px";>
+                                <h6>Rating: <%= b.rating %> &nbsp&nbsp&nbsp&nbsp&nbsp Would Recommend: <%= b.decision %></h6>
+                                <br>
+
+                                <h6><%= b.comment %></h6>
+                            </div> 
+                        </div>
+                         
+                          <% }); %>
+                          <br>
+                            <h5 style="text-align:center">Average Rating: <%= (total / thisDessert.blogger.length).toFixed(1) %></h5>
+                
+                  <% } else { %>
+                    <br>
+                    <br>
+
+                    <h5 style="text-align:center">Be the first to add a comment!</h5>
+                  <% } %>
+               
+            </div>
+        </div>
+</div>
+
+
+<%- include('../partials/footer') %>
