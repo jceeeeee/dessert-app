@@ -6,33 +6,42 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-<div class="show-page-div"  style="background-size: cover; background-color: black">
-    <section id="show-dessert-title" style="position:relative; left:80px";>
+<div class="container px-3 px-lg-2 my-5">
+    <section id="show-dessert-title">
+        <br> 
         <br>
-        <h1 style="text-align:center"><%= thisDessert.name %> @ <%= thisDessert.location %></h1>
-        <button><a href="/desserts/<%= thisDessert._id %>/edit">Update Entry</a></button>
+        <%# update button %>
+        <button id="submit-btn"><a href="/desserts/<%= thisDessert._id %>/edit" id="submit-btn"><i class="bi bi-pencil-square" style="color:white";></i></a></button>
+        <h1 style="text-align:center; font-weight:700; color:salmon";><%= thisDessert.name %> &nbsp|&nbsp <%= thisDessert.location %></h1>
         <br>
+        <hr style="width:60%; margin: 0 auto; color: salmon">
         <br>
-       <div class="row" id="show-dessert-info">
-            <div class="bg-dark py-5">
+       <div class="row" id="show-dessert-info"  style="font-size: 20px";>
+            <div class="col-md-6">
                 <div class="form-group">
-                    Description: <%= thisDessert.description %>
+                    <b class="title-bold">Description:</b><br> <%= thisDessert.description %>
                 </div>
+                <hr style="width:60%; margin: 0 auto;">
                 <div class="form-group">
-                    Flavour: <%= thisDessert.flavours %>
+                    <b class="title-bold">Flavour:</b><br> <%= thisDessert.flavours %>
                 </div>
+                <hr style="width:60%; margin: 0 auto;">
                 <div class="form-group">
-                    Calories: <%= thisDessert.calories %>
+                    <b class="title-bold">Calories:</b><br> <%= thisDessert.calories %>
                 </div>
+                <hr style="width:60%; margin: 0 auto;">
                 <div class="form-group"> 
-                    Price Range: <%= thisDessert.priceRange %>
+                    <b class="title-bold">Price Range:</b><br> <%= thisDessert.priceRange %>
                 </div>
+                <hr style="width:60%; margin: 0 auto;">
                 <div class="form-group">
                     <%# Appending the ingredient to the page %>
-                        <div>Ingredients:</div>
+                    <b class="title-bold">Ingredients:</b>
+                            <br>
+                            <br>
                             <ul>
                                 <%- thisDessert.ingredientList.map(d => 
-                                    `<span class="badge badge-pill badge-light"> ${d.ingredientName} </span>`
+                                    `<span class="badge badge-pill badge-light"> ${d.ingredientName} </span> &nbsp`
                                 ).join('') %>
                             </ul>
                     <%# Appending the ingredient to the dessert from drop down %>
@@ -41,23 +50,26 @@
                             <%- ingredients.map(i => `<option value="${i._id}">${i.ingredientName}</option>`).join('') %>
                         </select>
                         <br>
-                        <input type="submit" value="Add" style="color: black"/>
+                        <input type="submit" id="submit-btn" value="Add Ingredient"/>
                         </form>
                     </div>       
             </div>
-            <div class="col-6" style="position:relative; left:80px"; >
-                <img class="image" src="<%= thisDessert.photo %>" alt="..."  width="800" height="500"/>
+            <div class="col-md-4" style="position:relative; left:80px; top:30px"; >
+                <img class="image" src="<%= thisDessert.photo %>" alt="..."  width="400" height="500"/>
             </div>
         </div>
     </section>
 </div>
 
+<%# Line separating the sections %>
+<hr style="width:60%; margin: 0 auto; color: salmon">
 <%# The comment form %>
 
-<div class="container px-4 px-lg-5 my-5"  style="background-color: grey">
+<div class="container px-4 px-lg-5 my-5" style="background-color: #f8f8f8";>
     <form id="review-form" method="POST" action="/desserts/<%= thisDessert._id %>/bloggers">
         <br>
-        <h3>Leave a Comment</h3>
+        <h3 style="color: salmon; font-weight:700";>We'd love to hear from you! </h3>
+        <br>
        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -67,7 +79,7 @@
                     <input type="text" name="name" class="form-control" placeholder="Nickname *" value="" required />
                 </div>
                 <div class="form-group">
-                    <label>Rating</label>
+                    <label style="color: #383838";>Rating</label>
                     <select name="rating" class="form-control" required>
                         <option value="1">1</option>
                         <option value="1">1.5</option>
@@ -81,13 +93,13 @@
                       </select>
                 </div>
                 <div class="form-group">
-                    <label>Would you recommend this to a friend?</label>
+                    <label style="color: #383838";>Would you recommend this to a friend?</label>
                     <input type="radio" value="Yes" name="decision" checked > Yup
                     <input type="radio" value= "No" name="decision"> Nope
                 </div>
             
                 <div class="form-group">
-                    <input type="submit" value="Submit Comment" style="color: black"/>
+                    <input type="submit" id="submit-btn" value="Submit Comment"/>
                 </div>
             </div>
             <div class="col-md-6">
@@ -106,28 +118,28 @@
 
 <%# Viewing all comments and reviews %>
 
-<div class="container px-4 px-lg-5 my-5"  style="background-color: grey">
+<div class="container px-4 px-lg-5 my-5" style="background-color: #f8f8f8";>
         <br>
-        <h3>All Comments</h3>
+        <h3 style="color: salmon; font-weight:700";>All Comments</h3>
        <div class="row">
             <div>
                 <% if (thisDessert.blogger.length) { %>
                         <% let total = 0 %>
                         <% thisDessert.blogger.forEach(function(b) { %>
                             <% total += b.rating %>
-                        <div class="bg-dark py-5" >
+                        <div class="py-5" style="color: salmon"; >
                             <div class= "outer-comment-section" style = "position:relative; left:80px";>
                                 <h5> <form id="remove-review" method="POST"
                                 action="/desserts/<%= thisDessert._id %>/bloggers/<%= b._id %>?_method=DELETE">
-                                <input type='submit' value="X" style="color: black";>
+                                <input type='submit' value="X" id="submit-btn" style="margin-left:-50px";> &nbsp&nbsp&nbsp&nbsp 
                                 <%= b.createdAt.toLocaleDateString() %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <%= b.title %> @ <%= b.name %></h5>
                             </div>
                             <hr>
                             <div class="inner-comment-section" style = "position:relative; left:80px";>
-                                <h6>Rating: <%= b.rating %> &nbsp&nbsp&nbsp&nbsp&nbsp Would Recommend: <%= b.decision %></h6>
+                                <h6 style="color: #383838";>Rating: <%= b.rating %> &nbsp&nbsp&nbsp&nbsp&nbsp Would Recommend: <%= b.decision %></h6>
                                 <br>
 
-                                <h6><%= b.comment %></h6>
+                                <h6 style="color: #383838";><%= b.comment %></h6>
                             </div> 
                         </div>
                          

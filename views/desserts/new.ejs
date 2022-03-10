@@ -7,10 +7,11 @@
 
 
 
-<div class="container px-4 px-lg-5 my-5"  style="background-size: cover; background-image: url(https://images.unsplash.com/photo-1528975604071-b4dc52a2d18c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80)">
+<div class="container px-4 px-lg-5 my-5"  style="background-size: cover; background-image: url(https://images.unsplash.com/photo-1500511599662-5441d83fae18?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)">
     <form id="new-dessert-form" action="/desserts" method="POST">
         <br>
-        <h3>Add a New Dessert</h3>
+        <h3 style="color: #383838; font-weight:700";>Add a New Dessert</h3>
+        <br>
        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -23,7 +24,7 @@
                     <input type="number" name="calories" class="form-control" placeholder="Calories *" value="" required />
                 </div>
                 <div class="form-group"> 
-                    <label>Flavour:</label>
+                    <label style="color: #383838";>Flavour:</label>
                     <select name="flavours" required>
                         <option value="Chocolate">Chocolate</option>
                         <option value="Strawberry">Strawberry</option>
@@ -40,13 +41,13 @@
                     </select>
                 </div>
                 <div class="form-group"> 
-                    <label>Price Range:</label>
+                    <label style="color: #383838";>Price Range:</label>
                     <input type="radio" value="Low" name="priceRange" checked > Low ($)
                     <input type="radio" value= "Moderate" name="priceRange"> Moderate ($$)
                     <input type="radio" value="Pricey" name="priceRange"> Pricey ($$$)
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Add Dessert" style="color: black"/>
+                    <input type="submit" value="Add Dessert" id="submit-btn"/>
                 </div>
             </div>
             <div class="col-md-6">
