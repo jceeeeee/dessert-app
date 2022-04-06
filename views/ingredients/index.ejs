@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<!------ Include the above in your HEAD tag ---------->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<div class="container px-4 px-lg-5 my-5"  style="background-size: cover; background-image: url(https://images.unsplash.com/photo-1518393548894-5855d4207638?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)">
+  <form id="new-ingredients-form" action="/ingredients" method="POST">
+      <br>
+      <h3 style="color: #383838; font-weight:700";>Add a New Ingredient</h3>
+      <br>
+     <div class="row">
+          <div class="col-md-6">
+              <div class="form-group">
+                  <input type="text" name="ingredientName" class="form-control" placeholder="Ingredient Name *" value="" required />
+              </div>
+              <div class="form-group">
+                  <input type="text" name="ingredientCategories" class="form-control" placeholder="Category*" value="" required />
+              </div>
+              <div class="form-group">
+                  <input type="number" name="ingredientCalories" class="form-control" placeholder="Calories *" value="" required />
+              </div>
+              <div class="form-group">
+                  <input type="submit" value="Add Ingredient" id="submit-btn"/>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>
+
+
+<%- include('../partials/footer') %>
+
