@@ -2,7 +2,7 @@
 
 Let's add together all your favourite local desserts spots in Toronto so we know both the delicious and hidden gems to grab our sweets in town!
 
-Deployed App: 
+Deployed App: <a href="https://dessertify.herokuapp.com/">Dessertify App</a>
 
 ## Relationship Modelling
 
